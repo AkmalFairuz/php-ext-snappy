@@ -1,14 +1,9 @@
-ARG_ENABLE("snappy", "enable snappy support", "yes");
+// $Id$
+// vim:ft=javascript
+
+ARG_ENABLE("snappy", "Enable snappy extension", "no");
 
 if (PHP_SNAPPY != "no") {
-  if (CHECK_LIB("snappy.lib;libsnappy.lib", "snappy", PHP_SNAPPY) &&
-      CHECK_HEADER_ADD_INCLUDE("snappy-c.h", "CFLAGS_SNAPPY", PHP_SNAPPY)) {
-    EXTENSION("snappy", "snappy.c", PHP_SNAPPY_SHARED, "/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1");
-  } else {
-    EXTENSION("snappy", "snappy.c", PHP_SNAPPY_SHARED, "/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1");
-    ADD_SOURCES("snappy", "snappy-c.cc snappy.cc snappy-stubs-internal.cc snappy-sinksource.cc", "snappy", "snappy");
-    ADD_FLAG("CFLAGS_SNAPPY", " /I" + configure_module_dirname + " /I" + configure_module_dirname + "/snappy");
-    // TODO: Need to create snappy/snappy-stubs-public.h
-  }
-  PHP_INSTALL_HEADERS("ext/snappy/", "php_snappy.h");
+	EXTENSION("snappy", "snappy.c", PHP_SNAPPY_SHARED, "/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 /I" + configure_module_dirname + " /I" + configure_module_dirname + "/snappy");
+	ADD_FLAG("CFLAGS_SNAPPY", "/EHsc");
 }
